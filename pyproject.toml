@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "OracleDevUtils"
+version = "0.1.0"
+authors = [
+  { name="Your Name", email="your.email@example.com" },
+]
+description = "Utilities for Oracle development including compilation and dependency analysis."
+readme = "README.md"
+requires-python = ">=3.8" # Specify your minimum Python version
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License", # Choose your license
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Database",
+]
+dependencies = [
+    "oracledb >= 1.2", # Oracle database driver
+    "python-dotenv >= 0.20", # For loading environment variables from .env files
+    # Add other core dependencies here, e.g., "click" if using it for CLI
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest >= 7.0",
+    # "pytest-cov", # For coverage reporting
+]
+dev = [
+    "black", # Code formatter
+    "flake8", # Linter
+    "mypy", # Type checker
+    "OracleDevUtils[test]", # Include test dependencies in dev - Note: Using ProjectName here based on batch script logic
+]
+
+[project.urls]
+"Homepage" = "https://github.com/your_username/OracleDevUtils" # Optional: Link to your repo
+"Bug Tracker" = "https://github.com/your_username/OracleDevUtils/issues" # Optional
+
+# Optional: Define command-line script entry points
+[project.scripts]
+oracle-dev-tool = "oracle_dev_utils.cli:main" # Note: Uses PackageName here
+
+[tool.setuptools.packages.find]
+where = ["src"]  # look for packages in src/
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --import-mode=importlib" # Recommended options
+testpaths = [
+    "tests",
+]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+# Register custom markers to avoid warnings
+markers = [
+    "database: mark test as requiring a live database connection",
+]
+
+# Optional: mypy configuration
+# [tool.mypy]
+# python_version = "3.9"
+# warn_return_any = true
+# warn_unused_configs = true
+
+# Optional: black configuration
+# [tool.black]
+# line-length = 88
